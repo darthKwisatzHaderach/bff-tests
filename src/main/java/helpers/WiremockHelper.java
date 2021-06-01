@@ -5,7 +5,7 @@ import com.google.gson.Gson;
 import enums.HttpMethod;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.aResponse;
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 
 public class WiremockHelper {
@@ -15,8 +15,8 @@ public class WiremockHelper {
         MappingBuilder mappingBuilder = null;
 
         switch (method) {
-            case GET:
-                mappingBuilder = get(endpoint);
+            case POST:
+                mappingBuilder = post(endpoint);
                 break;
         }
 

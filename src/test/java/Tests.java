@@ -20,12 +20,12 @@ public class Tests {
     @Test
     public void test() {
         ProductInfo productInfo = new ProductInfo();
-        WiremockHelper.setMock(HttpMethod.GET, "/product?productId=700110", productInfo);
+        WiremockHelper.setMock(HttpMethod.POST, "/info", productInfo);
 
         ProductPrice productPrice = new ProductPrice();
-        WiremockHelper.setMock(HttpMethod.GET, "/price?productId=700110", productPrice);
+        WiremockHelper.setMock(HttpMethod.POST, "/price", productPrice);
 
         ProductStockInfo productStockInfo = new ProductStockInfo();
-        WiremockHelper.setMock(HttpMethod.GET, "/stock?productId=700110", productStockInfo);
+        WiremockHelper.setMock(HttpMethod.POST, "/stock", productStockInfo);
     }
 }
