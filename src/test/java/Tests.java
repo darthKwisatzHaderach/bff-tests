@@ -1,8 +1,8 @@
 import com.github.tomakehurst.wiremock.client.WireMock;
 import org.testng.annotations.Test;
 
-import static com.github.tomakehurst.wiremock.client.WireMock.get;
 import static com.github.tomakehurst.wiremock.client.WireMock.ok;
+import static com.github.tomakehurst.wiremock.client.WireMock.post;
 import static com.github.tomakehurst.wiremock.client.WireMock.reset;
 import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 
@@ -13,7 +13,7 @@ public class Tests {
         WireMock.configureFor("localhost", 8443);
         reset();
 
-        stubFor(get("/product?productId=700110")
+        stubFor(post("/info")
                 .willReturn(ok()
                         .withHeader("Content-Type", "text/xml")
                         .withBody("{\n" +
@@ -25,7 +25,7 @@ public class Tests {
                                 "\t\"width\": 0.1\n" +
                                 "}")));
 
-        stubFor(get("/price?productId=700110")
+        stubFor(post("/price")
                 .willReturn(ok()
                         .withHeader("Content-Type", "text/xml")
                         .withBody("{\n" +
@@ -33,7 +33,7 @@ public class Tests {
                                 "\t\"currency\": \"RUR\"\n" +
                                 "}")));
 
-        stubFor(get("/stock?productId=700110")
+        stubFor(post("/stock")
                 .willReturn(ok()
                         .withHeader("Content-Type", "text/xml")
                         .withBody("{\n" +
