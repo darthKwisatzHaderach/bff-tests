@@ -5,7 +5,7 @@ public class ProductPrice {
     private Double price;
     private Currency currency;
 
-    public void ProjectPrice() {
+    public ProductPrice() {
         this.price = 5.0;
         this.currency = Currency.RUR;
     }
