@@ -2,6 +2,7 @@ package enums;
 
 public enum UrlPattern {
     PRODUCT("/product"),
+    INFO("/info"),
     PRICE("/price"),
     STOCK("/stock");
 

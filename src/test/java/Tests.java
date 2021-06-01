@@ -8,9 +8,6 @@ import objects.ProductStockInfo;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import static com.github.tomakehurst.wiremock.client.WireMock.reset;
 
 public class Tests {
@@ -23,16 +20,13 @@ public class Tests {
 
     @Test
     public void test() {
-        Map<String, String> queryParams = new HashMap<>();
-        queryParams.put("productId", "700110");
-
         ProductInfo productInfo = new ProductInfo();
-        WiremockHelper.setMock(HttpMethod.GET, UrlPattern.PRODUCT, queryParams, productInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, productInfo);
 
         ProductPrice productPrice = new ProductPrice();
-        WiremockHelper.setMock(HttpMethod.GET, UrlPattern.PRICE, queryParams, productPrice);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, productPrice);
 
         ProductStockInfo productStockInfo = new ProductStockInfo();
-        WiremockHelper.setMock(HttpMethod.GET, UrlPattern.STOCK, queryParams, productStockInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, productStockInfo);
     }
 }
