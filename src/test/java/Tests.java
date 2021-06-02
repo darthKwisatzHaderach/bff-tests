@@ -2,56 +2,54 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 import enums.HttpMethod;
 import enums.Source;
 import enums.UrlPattern;
+import helpers.BffClient;
 import helpers.WiremockHelper;
 import objects.ProductInfo;
 import objects.ProductPrice;
 import objects.ProductRequest;
+import objects.ProductResponse;
 import objects.ProductStockInfo;
+import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.reset;
-import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.equalTo;
 
 public class Tests {
 
     @BeforeClass
     public void beforeClass() {
-        WireMock.configureFor("localhost", 8443);
+        WireMock.configureFor(WiremockHelper.host, WiremockHelper.port);
         reset();
     }
 
     @Test
     public void checkAllResponseFieldsForOfflineSourceTest() {
+        ProductRequest productRequest = new ProductRequest("700110", Source.OFFLINE);
         ProductInfo productInfo = new ProductInfo();
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, productInfo);
-
         ProductPrice productPrice = new ProductPrice();
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, productPrice);
-
         ProductStockInfo productStockInfo = new ProductStockInfo();
+
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, productInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, productPrice);
         WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, productStockInfo);
 
-        ProductRequest productRequest = new ProductRequest();
-        productRequest.setProductId("700110");
-        productRequest.setSource(Source.OFFLINE);
+        ProductResponse productResponse = new ProductResponse(
+                productInfo.getTitle(),
+                productInfo.getDescription(),
+                productInfo.getWeight(),
+                productInfo.getHeight(),
+                productInfo.getLength(),
+                productInfo.getWidth(),
+                productPrice.getPrice(),
+                productPrice.getCurrency(),
+                productStockInfo.getAvailableStock(),
+                productStockInfo.getRow(),
+                productStockInfo.getShell()
+        );
 
-        given()
-                .body(productRequest)
-                .when()
-                .post("http://localhost:8000/v1/product")
-                .then()
-                .body("title", equalTo("Title"))
-                .body("description", equalTo("Description"))
-                .body("weight", equalTo(3.0F))
-                .body("height", equalTo(0.1F))
-                .body("length", equalTo(0.1F))
-                .body("width", equalTo(0.1F))
-                .body("price", equalTo(5.0F))
-                .body("currency", equalTo("RUR"))
-                .body("availableStock", equalTo(20.0F))
-                .body("row", equalTo(1))
-                .body("shell", equalTo(3));
+        ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, productRequest, ProductResponse.class);
+
+        Assert.assertEquals(result, productResponse);
     }
 }

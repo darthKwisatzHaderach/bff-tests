@@ -11,6 +11,9 @@ import static com.github.tomakehurst.wiremock.client.WireMock.stubFor;
 
 public class WiremockHelper {
 
+    public static final String host = "localhost";
+    public static final int port = 8443;
+
     public static void setMock(HttpMethod method, UrlPattern urlPattern, Object body) {
         Gson gson = new Gson();
         MappingBuilder mappingBuilder = null;
