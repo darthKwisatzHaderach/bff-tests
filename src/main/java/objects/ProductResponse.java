@@ -20,4 +20,29 @@ public class ProductResponse {
     private Double availableStock;
     private Integer row;
     private Integer shell;
+
+    public ProductResponse(String title, Double price, Currency currency) {
+        this.title = title;
+        this.price = price;
+        this.currency = currency;
+    }
+
+    public ProductResponse(
+            String title,
+            String description,
+            Double weight,
+            Double height,
+            Double length,
+            Double width,
+            Double price,
+            Currency currency) {
+        this.title = title;
+        this.description = description;
+        this.weight = weight;
+        this.height = height;
+        this.length = length;
+        this.width = width;
+        this.price = price;
+        this.currency = currency;
+    }
 }

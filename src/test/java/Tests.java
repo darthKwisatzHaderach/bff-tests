@@ -52,4 +52,53 @@ public class Tests {
 
         Assert.assertEquals(result, productResponse);
     }
+
+    @Test
+    public void checkAllResponseFieldsForMobileSourceTest() {
+        ProductRequest productRequest = new ProductRequest("700110", Source.MOBILE);
+        ProductInfo productInfo = new ProductInfo();
+        ProductPrice productPrice = new ProductPrice();
+        ProductStockInfo productStockInfo = new ProductStockInfo();
+
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, productInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, productPrice);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, productStockInfo);
+
+        ProductResponse productResponse = new ProductResponse(
+                productInfo.getTitle(),
+                productPrice.getPrice(),
+                productPrice.getCurrency()
+        );
+
+        ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, productRequest, ProductResponse.class);
+
+        Assert.assertEquals(result, productResponse);
+    }
+
+    @Test
+    public void checkAllResponseFieldsForDesktopSourceTest() {
+        ProductRequest productRequest = new ProductRequest("700110", Source.DESKTOP);
+        ProductInfo productInfo = new ProductInfo();
+        ProductPrice productPrice = new ProductPrice();
+        ProductStockInfo productStockInfo = new ProductStockInfo();
+
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, productInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, productPrice);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, productStockInfo);
+
+        ProductResponse productResponse = new ProductResponse(
+                productInfo.getTitle(),
+                productInfo.getDescription(),
+                productInfo.getWeight(),
+                productInfo.getHeight(),
+                productInfo.getLength(),
+                productInfo.getWidth(),
+                productPrice.getPrice(),
+                productPrice.getCurrency()
+        );
+
+        ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, productRequest, ProductResponse.class);
+
+        Assert.assertEquals(result, productResponse);
+    }
 }
