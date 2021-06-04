@@ -1,10 +1,11 @@
 package stepdefs;
 
+import com.github.tomakehurst.wiremock.http.Fault;
 import com.google.inject.Inject;
 import enums.HttpMethod;
 import enums.Source;
 import enums.UrlPattern;
-import helpers.BffClient;
+import clients.BffClient;
 import helpers.WiremockHelper;
 import io.cucumber.java.ru.Допустим;
 import io.cucumber.java.ru.Когда;
@@ -21,6 +22,16 @@ public class BffProcessingErrorsSteps {
     @Допустим("в случае ошибки на запрос {string} {string} сервис возвращает код состояния {int}")
     public void в_случае_ошибки_на_запрос_сервис_возвращает_код_состояния(String httpMethod, String urlPattern, Integer statusCode) {
         WiremockHelper.setMock(HttpMethod.valueOf(httpMethod), UrlPattern.valueOf(urlPattern), statusCode, world.productInfo);
+    }
+
+    @Допустим("при запросе {string} {string} происходит разрыв соединения")
+    public void при_запросе_происходит_разрыв_соединения(String httpMethod, String urlPattern) {
+        WiremockHelper.setMockWithFault(HttpMethod.valueOf(httpMethod), UrlPattern.valueOf(urlPattern), Fault.CONNECTION_RESET_BY_PEER);
+    }
+
+    @Допустим("при запросе {string} {string} сервис возвращает код состояния {int}, но некорректный ответ")
+    public void при_запросе_сервис_возвращает_код_состояния_но_некорректный_ответ(String httpMethod, String urlPattern, Integer statusCode) {
+        WiremockHelper.setMock(HttpMethod.valueOf(httpMethod), UrlPattern.valueOf(urlPattern), statusCode, "{text}");
     }
 
     @Когда("клиент выполняет запрос на агрегацию информации о продукте")

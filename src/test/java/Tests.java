@@ -2,7 +2,7 @@ import com.github.tomakehurst.wiremock.client.WireMock;
 import enums.HttpMethod;
 import enums.Source;
 import enums.UrlPattern;
-import helpers.BffClient;
+import clients.BffClient;
 import helpers.WiremockHelper;
 import objects.ProductInfo;
 import objects.ProductPrice;

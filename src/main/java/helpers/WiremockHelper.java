@@ -1,6 +1,7 @@
 package helpers;
 
 import com.github.tomakehurst.wiremock.client.MappingBuilder;
+import com.github.tomakehurst.wiremock.http.Fault;
 import com.google.gson.Gson;
 import enums.HttpMethod;
 import enums.UrlPattern;
@@ -23,6 +24,13 @@ public class WiremockHelper {
                         .withStatus(statusCode)
                         .withHeader("Content-Type", "application/json")
                         .withBody(gson.toJson(body)));
+
+        stubFor(mappingBuilder);
+    }
+
+    public static void setMockWithFault(HttpMethod method, UrlPattern urlPattern, Fault fault) {
+        MappingBuilder mappingBuilder = createMappingBuilder(method, urlPattern)
+                .willReturn(aResponse().withFault(fault));
 
         stubFor(mappingBuilder);
     }

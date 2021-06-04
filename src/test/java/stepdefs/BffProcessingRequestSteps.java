@@ -5,7 +5,7 @@ import com.google.inject.Inject;
 import enums.HttpMethod;
 import enums.Source;
 import enums.UrlPattern;
-import helpers.BffClient;
+import clients.BffClient;
 import helpers.WiremockHelper;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Пусть;
