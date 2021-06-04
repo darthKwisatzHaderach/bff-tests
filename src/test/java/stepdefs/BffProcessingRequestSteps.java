@@ -26,15 +26,15 @@ public class BffProcessingRequestSteps {
         WireMock.configureFor(WiremockHelper.host, WiremockHelper.port);
         reset();
 
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, world.productInfo);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, world.productPrice);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, world.productStockInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, world.productInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, world.productPrice);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, world.productStockInfo);
     }
 
     @Когда("клиент выполняет запрос на агрегацию информации о продукте для источника {string}")
     public void клиент_выполняет_запрос_на_агрегацию_информации_о_продукте_для_источника(String source) {
         ProductRequest productRequest = new ProductRequest("700110", Source.valueOf(source));
-        world.productResponse = BffClient.postRequest(UrlPattern.PRODUCT, productRequest, ProductResponse.class);
+        world.productResponse = BffClient.postRequest(UrlPattern.PRODUCT, 200, productRequest, ProductResponse.class);
     }
 
     @Тогда("BFF возвращает ответ с полным набором полей")

@@ -30,9 +30,9 @@ public class Tests {
         ProductPrice productPrice = new ProductPrice();
         ProductStockInfo productStockInfo = new ProductStockInfo();
 
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, productInfo);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, productPrice);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, productStockInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, productInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, productPrice);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, productStockInfo);
 
         ProductResponse productResponse = new ProductResponse(
                 productInfo.getTitle(),
@@ -48,7 +48,7 @@ public class Tests {
                 productStockInfo.getShell()
         );
 
-        ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, productRequest, ProductResponse.class);
+        ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, 200, productRequest, ProductResponse.class);
 
         Assert.assertEquals(result, productResponse);
     }
@@ -60,9 +60,9 @@ public class Tests {
         ProductPrice productPrice = new ProductPrice();
         ProductStockInfo productStockInfo = new ProductStockInfo();
 
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, productInfo);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, productPrice);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, productStockInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, productInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, productPrice);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, productStockInfo);
 
         ProductResponse productResponse = new ProductResponse(
                 productInfo.getTitle(),
@@ -70,7 +70,7 @@ public class Tests {
                 productPrice.getCurrency()
         );
 
-        ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, productRequest, ProductResponse.class);
+        ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, 200, productRequest, ProductResponse.class);
 
         Assert.assertEquals(result, productResponse);
     }
@@ -82,9 +82,9 @@ public class Tests {
         ProductPrice productPrice = new ProductPrice();
         ProductStockInfo productStockInfo = new ProductStockInfo();
 
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, productInfo);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, productPrice);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, productStockInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, productInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, productPrice);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, productStockInfo);
 
         ProductResponse productResponse = new ProductResponse(
                 productInfo.getTitle(),
@@ -97,7 +97,7 @@ public class Tests {
                 productPrice.getCurrency()
         );
 
-        ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, productRequest, ProductResponse.class);
+        ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, 200, productRequest, ProductResponse.class);
 
         Assert.assertEquals(result, productResponse);
     }
