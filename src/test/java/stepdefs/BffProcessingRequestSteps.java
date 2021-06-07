@@ -10,8 +10,11 @@ import helpers.WiremockHelper;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Пусть;
 import io.cucumber.java.ru.Тогда;
-import objects.ProductRequest;
-import objects.ProductResponse;
+import objects.requests.ProductInfoRequest;
+import objects.requests.ProductPriceRequest;
+import objects.requests.ProductRequest;
+import objects.requests.ProductStockInfoRequest;
+import objects.responses.ProductResponse;
 import org.testng.Assert;
 
 import static com.github.tomakehurst.wiremock.client.WireMock.reset;
@@ -26,9 +29,9 @@ public class BffProcessingRequestSteps {
         WireMock.configureFor(WiremockHelper.host, WiremockHelper.port);
         reset();
 
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, world.productInfo);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, world.productPrice);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, world.productStockInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, world.productInfoRequest, world.productInfoResponse);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, world.productPriceRequest, world.productPriceResponse);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, world.productStockInfoRequest, world.productStockInfoResponse);
     }
 
     @Когда("клиент выполняет запрос на агрегацию информации о продукте для источника {string}")
@@ -40,17 +43,17 @@ public class BffProcessingRequestSteps {
     @Тогда("BFF возвращает ответ с полным набором полей")
     public void bff_возвращает_ответ_с_полным_набором_полей() {
         ProductResponse expectedProductResponse = new ProductResponse(
-                world.productInfo.getTitle(),
-                world.productInfo.getDescription(),
-                world.productInfo.getWeight(),
-                world.productInfo.getHeight(),
-                world.productInfo.getLength(),
-                world.productInfo.getWidth(),
-                world.productPrice.getPrice(),
-                world.productPrice.getCurrency(),
-                world.productStockInfo.getAvailableStock(),
-                world.productStockInfo.getRow(),
-                world.productStockInfo.getShell()
+                world.productInfoResponse.getTitle(),
+                world.productInfoResponse.getDescription(),
+                world.productInfoResponse.getWeight(),
+                world.productInfoResponse.getHeight(),
+                world.productInfoResponse.getLength(),
+                world.productInfoResponse.getWidth(),
+                world.productPriceResponse.getPrice(),
+                world.productPriceResponse.getCurrency(),
+                world.productStockInfoResponse.getAvailableStock(),
+                world.productStockInfoResponse.getRow(),
+                world.productStockInfoResponse.getShell()
         );
 
         Assert.assertEquals(world.productResponse, expectedProductResponse);
@@ -59,14 +62,14 @@ public class BffProcessingRequestSteps {
     @Тогда("BFF возвращает ответ со стандартным набором полей")
     public void bff_возвращает_ответ_со_стандартным_набором_полей() {
         ProductResponse expectedProductResponse = new ProductResponse(
-                world.productInfo.getTitle(),
-                world.productInfo.getDescription(),
-                world.productInfo.getWeight(),
-                world.productInfo.getHeight(),
-                world.productInfo.getLength(),
-                world.productInfo.getWidth(),
-                world.productPrice.getPrice(),
-                world.productPrice.getCurrency()
+                world.productInfoResponse.getTitle(),
+                world.productInfoResponse.getDescription(),
+                world.productInfoResponse.getWeight(),
+                world.productInfoResponse.getHeight(),
+                world.productInfoResponse.getLength(),
+                world.productInfoResponse.getWidth(),
+                world.productPriceResponse.getPrice(),
+                world.productPriceResponse.getCurrency()
         );
 
         Assert.assertEquals(world.productResponse, expectedProductResponse);
@@ -75,9 +78,9 @@ public class BffProcessingRequestSteps {
     @Тогда("BFF возвращает ответ с минимальным набором полей")
     public void bff_возвращает_ответ_с_минимальным_набором_полей() {
         ProductResponse expectedProductResponse = new ProductResponse(
-                world.productInfo.getTitle(),
-                world.productPrice.getPrice(),
-                world.productPrice.getCurrency()
+                world.productInfoResponse.getTitle(),
+                world.productPriceResponse.getPrice(),
+                world.productPriceResponse.getCurrency()
         );
 
         Assert.assertEquals(world.productResponse, expectedProductResponse);

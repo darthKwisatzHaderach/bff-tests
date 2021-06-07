@@ -10,8 +10,8 @@ import helpers.WiremockHelper;
 import io.cucumber.java.ru.Допустим;
 import io.cucumber.java.ru.Когда;
 import io.cucumber.java.ru.Тогда;
-import objects.ProductErrorResponse;
-import objects.ProductRequest;
+import objects.responses.ProductErrorResponse;
+import objects.requests.ProductRequest;
 import org.testng.Assert;
 
 public class BffProcessingErrorsSteps {
@@ -21,7 +21,7 @@ public class BffProcessingErrorsSteps {
 
     @Допустим("в случае ошибки на запрос {string} {string} сервис возвращает код состояния {int}")
     public void в_случае_ошибки_на_запрос_сервис_возвращает_код_состояния(String httpMethod, String urlPattern, Integer statusCode) {
-        WiremockHelper.setMock(HttpMethod.valueOf(httpMethod), UrlPattern.valueOf(urlPattern), statusCode, world.productInfo);
+        WiremockHelper.setMock(HttpMethod.valueOf(httpMethod), UrlPattern.valueOf(urlPattern), statusCode, "Server error");
     }
 
     @Допустим("при запросе {string} {string} происходит разрыв соединения")

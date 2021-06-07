@@ -1,14 +1,14 @@
-package objects;
+package objects.responses;
 
 import enums.Currency;
 import lombok.Data;
 
 @Data
-public class ProductPrice {
+public class ProductPriceResponse {
     private Double price;
     private Currency currency;
 
-    public ProductPrice() {
+    public ProductPriceResponse() {
         this.price = 5.0;
         this.currency = Currency.RUR;
     }

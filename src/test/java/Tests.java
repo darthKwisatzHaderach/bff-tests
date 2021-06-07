@@ -4,11 +4,11 @@ import enums.Source;
 import enums.UrlPattern;
 import clients.BffClient;
 import helpers.WiremockHelper;
-import objects.ProductInfo;
-import objects.ProductPrice;
-import objects.ProductRequest;
-import objects.ProductResponse;
-import objects.ProductStockInfo;
+import objects.responses.ProductInfoResponse;
+import objects.responses.ProductPriceResponse;
+import objects.requests.ProductRequest;
+import objects.responses.ProductResponse;
+import objects.responses.ProductStockInfoResponse;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -26,26 +26,26 @@ public class Tests {
     @Test
     public void checkAllResponseFieldsForOfflineSourceTest() {
         ProductRequest productRequest = new ProductRequest("700110", Source.OFFLINE);
-        ProductInfo productInfo = new ProductInfo();
-        ProductPrice productPrice = new ProductPrice();
-        ProductStockInfo productStockInfo = new ProductStockInfo();
+        ProductInfoResponse productInfoResponse = new ProductInfoResponse();
+        ProductPriceResponse productPriceResponse = new ProductPriceResponse();
+        ProductStockInfoResponse productStockInfoResponse = new ProductStockInfoResponse();
 
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, productInfo);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, productPrice);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, productStockInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, productInfoResponse);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, productPriceResponse);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, productStockInfoResponse);
 
         ProductResponse productResponse = new ProductResponse(
-                productInfo.getTitle(),
-                productInfo.getDescription(),
-                productInfo.getWeight(),
-                productInfo.getHeight(),
-                productInfo.getLength(),
-                productInfo.getWidth(),
-                productPrice.getPrice(),
-                productPrice.getCurrency(),
-                productStockInfo.getAvailableStock(),
-                productStockInfo.getRow(),
-                productStockInfo.getShell()
+                productInfoResponse.getTitle(),
+                productInfoResponse.getDescription(),
+                productInfoResponse.getWeight(),
+                productInfoResponse.getHeight(),
+                productInfoResponse.getLength(),
+                productInfoResponse.getWidth(),
+                productPriceResponse.getPrice(),
+                productPriceResponse.getCurrency(),
+                productStockInfoResponse.getAvailableStock(),
+                productStockInfoResponse.getRow(),
+                productStockInfoResponse.getShell()
         );
 
         ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, 200, productRequest, ProductResponse.class);
@@ -56,18 +56,18 @@ public class Tests {
     @Test
     public void checkAllResponseFieldsForMobileSourceTest() {
         ProductRequest productRequest = new ProductRequest("700110", Source.MOBILE);
-        ProductInfo productInfo = new ProductInfo();
-        ProductPrice productPrice = new ProductPrice();
-        ProductStockInfo productStockInfo = new ProductStockInfo();
+        ProductInfoResponse productInfoResponse = new ProductInfoResponse();
+        ProductPriceResponse productPriceResponse = new ProductPriceResponse();
+        ProductStockInfoResponse productStockInfoResponse = new ProductStockInfoResponse();
 
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, productInfo);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, productPrice);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, productStockInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, productInfoResponse);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, productPriceResponse);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, productStockInfoResponse);
 
         ProductResponse productResponse = new ProductResponse(
-                productInfo.getTitle(),
-                productPrice.getPrice(),
-                productPrice.getCurrency()
+                productInfoResponse.getTitle(),
+                productPriceResponse.getPrice(),
+                productPriceResponse.getCurrency()
         );
 
         ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, 200, productRequest, ProductResponse.class);
@@ -78,23 +78,23 @@ public class Tests {
     @Test
     public void checkAllResponseFieldsForDesktopSourceTest() {
         ProductRequest productRequest = new ProductRequest("700110", Source.DESKTOP);
-        ProductInfo productInfo = new ProductInfo();
-        ProductPrice productPrice = new ProductPrice();
-        ProductStockInfo productStockInfo = new ProductStockInfo();
+        ProductInfoResponse productInfoResponse = new ProductInfoResponse();
+        ProductPriceResponse productPriceResponse = new ProductPriceResponse();
+        ProductStockInfoResponse productStockInfoResponse = new ProductStockInfoResponse();
 
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, productInfo);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, productPrice);
-        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, productStockInfo);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.INFO, 200, productInfoResponse);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.PRICE, 200, productPriceResponse);
+        WiremockHelper.setMock(HttpMethod.POST, UrlPattern.STOCK, 200, productStockInfoResponse);
 
         ProductResponse productResponse = new ProductResponse(
-                productInfo.getTitle(),
-                productInfo.getDescription(),
-                productInfo.getWeight(),
-                productInfo.getHeight(),
-                productInfo.getLength(),
-                productInfo.getWidth(),
-                productPrice.getPrice(),
-                productPrice.getCurrency()
+                productInfoResponse.getTitle(),
+                productInfoResponse.getDescription(),
+                productInfoResponse.getWeight(),
+                productInfoResponse.getHeight(),
+                productInfoResponse.getLength(),
+                productInfoResponse.getWidth(),
+                productPriceResponse.getPrice(),
+                productPriceResponse.getCurrency()
         );
 
         ProductResponse result = BffClient.postRequest(UrlPattern.PRODUCT, 200, productRequest, ProductResponse.class);
