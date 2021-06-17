@@ -38,20 +38,20 @@ public class Tests {
         productRequest.setSource(Source.OFFLINE);
 
         given()
-                .body(productRequest)
-                .when()
-                .post("http://localhost:8000/v1/product")
-                .then()
-                .body("title", equalTo("Title"))
-                .body("description", equalTo("Description"))
-                .body("weight", equalTo(3.0F))
-                .body("height", equalTo(0.1F))
-                .body("length", equalTo(0.1F))
-                .body("width", equalTo(0.1F))
-                .body("price", equalTo(5.0F))
-                .body("currency", equalTo("RUR"))
-                .body("availableStock", equalTo(20.0F))
-                .body("row", equalTo(1))
-                .body("shell", equalTo(3));
+            .body(productRequest)
+        .when()
+            .post("http://localhost:8000/v1/product")
+        .then()
+            .body("title", equalTo("Title"))
+            .body("description", equalTo("Description"))
+            .body("weight", equalTo(3.0F))
+            .body("height", equalTo(0.1F))
+            .body("length", equalTo(0.1F))
+            .body("width", equalTo(0.1F))
+            .body("price", equalTo(5.0F))
+            .body("currency", equalTo("RUR"))
+            .body("availableStock", equalTo(20.0F))
+            .body("row", equalTo(1))
+            .body("shell", equalTo(3));
     }
 }
